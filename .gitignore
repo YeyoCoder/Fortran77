@@ -3,14 +3,12 @@
 01circle.exe
 02circle.exe
 03bisection.~f
-03bisection.~~f
 03bisection.exe
 04bisectionTwo.~f
 04bisectionTwo.~~f
-04bisectionTwo.exe
+04regulaFalsi.~f
+04regulaFalsi.exe
 05regulaFalsi.~f
-05regulaFalsi.~~f
-05regulaFalsi.exe
 06regulaFalsiMod.~f
 06regulaFalsiMod.exe
 07Newton.~f
