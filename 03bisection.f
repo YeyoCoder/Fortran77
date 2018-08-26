@@ -15,7 +15,7 @@ C     INSTRUCTIONS
       FC = C**2-2
       D = FA*FB
       
-      WRITE(*,*)'         i    |a           |b            |c            |d'
+      WRITE(*,*)'         i    |a           |b            |c         |d'
 C     .LT. = LEST THAN
       IF (D .LT. 0) THEN
         DO I=1, 10

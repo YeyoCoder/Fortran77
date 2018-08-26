@@ -1,4 +1,4 @@
-C     BISECTION METHOD TO FIND
+C     FALSE POSITION METHOD TO FIND
 C     THE ROOT OF F(X) = X**2 -2
 
 C     MêTODO DE LA BISECCI‡N PARA HALLAR
@@ -6,16 +6,17 @@ C     LAS RA÷CES DE  F(X) = X**2 -2
       PROGRAM BISECTION
 C     VARIABLE DECLARATIONS
       REAL A, B, C, D, FA ,FB, FC
+      REAL APPROX, F
 C     INSTRUCTIONS
       A = 1
       B = 2
-      C = (A+B)/2
-      FA = A**2-2
-      FB = B**2-2
-      FC = C**2-2
+      FA = F(A)
+      FB = F(B)
+      C = APPROX(A, FA, B ,FB)
+      FC = F(C)
       D = FA*FB
-      
-      WRITE(*,*)'         i    |a           |b            |c            |d'
+
+      WRITE(*,*)'         i    |a           |b            |c         |d'
 C     .LT. = LEST THAN
       IF (D .LT. 0) THEN
         DO I=1, 10
@@ -25,9 +26,9 @@ C     .LT. = LEST THAN
           ELSE
             B = C
           END IF
-          C = (A+B)/2
-          FA = A**2-2
-          FC = C**2-2
+          C = APPROX(A, FA, B ,FB)
+          FA = F(A)
+          FC = F(C)
           D = FA*FC
         END DO
       ELSE
@@ -35,4 +36,14 @@ C     .LT. = LEST THAN
       END IF
       READ(*,*)
       STOP
+      END
+      
+      REAL FUNCTION APPROX(A, FA, B, FB)
+      APPROX = (A*FB-B*FA)/ FB*FA
+      RETURN
+      END
+      
+      REAL FUNCTION F (X)
+      F = X**2-2
+      RETURN
       END
