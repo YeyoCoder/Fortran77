@@ -1,0 +1,1051 @@
+#LyX 2.3 created this file. For more info see http://www.lyx.org/
+\lyxformat 544
+\begin_document
+\begin_header
+\save_transient_properties true
+\origin unavailable
+\textclass article
+\use_default_options true
+\begin_modules
+enumitem
+\end_modules
+\maintain_unincluded_children false
+\language english
+\language_package default
+\inputencoding auto
+\fontencoding global
+\font_roman "default" "default"
+\font_sans "default" "default"
+\font_typewriter "default" "default"
+\font_math "auto" "auto"
+\font_default_family default
+\use_non_tex_fonts false
+\font_sc false
+\font_osf false
+\font_sf_scale 100 100
+\font_tt_scale 100 100
+\use_microtype false
+\use_dash_ligatures true
+\graphics default
+\default_output_format default
+\output_sync 0
+\bibtex_command default
+\index_command default
+\paperfontsize default
+\spacing single
+\use_hyperref false
+\papersize default
+\use_geometry false
+\use_package amsmath 1
+\use_package amssymb 1
+\use_package cancel 1
+\use_package esint 1
+\use_package mathdots 1
+\use_package mathtools 1
+\use_package mhchem 1
+\use_package stackrel 1
+\use_package stmaryrd 1
+\use_package undertilde 1
+\cite_engine basic
+\cite_engine_type default
+\biblio_style plain
+\use_bibtopic false
+\use_indices false
+\paperorientation portrait
+\suppress_date false
+\justification true
+\use_refstyle 1
+\use_minted 0
+\index Index
+\shortcut idx
+\color #008000
+\end_index
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation indent
+\paragraph_indentation default
+\is_math_indent 0
+\math_numbering_side default
+\quotes_style english
+\dynamic_quotes 0
+\papercolumns 1
+\papersides 1
+\paperpagestyle default
+\tracking_changes false
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\end_header
+
+\begin_body
+
+\begin_layout Title
+Examen Final Análisis Numérico
+\end_layout
+
+\begin_layout Author
+Diego Abraham Olvera Mendoz
+\end_layout
+
+\begin_layout Date
+05 de Enero del 2019
+\end_layout
+
+\begin_layout Paragraph*
+Programas
+\end_layout
+
+\begin_layout Standard
+Los programas presentados para los ejercicios 1 al 4 en este examen fueron
+ escritos tratando de seguir los estándares de FORTRAN 77 en la medida de
+ lo posible.
+ El último programa es un script que puede ser ejecutado en software Octave.
+\end_layout
+
+\begin_layout Enumerate
+La distribución normal es muy empleada en estadística y está dada por 
+\begin_inset Formula 
+\[
+f\left(x;\mu,\sigma\right)=\frac{1}{\sqrt{2\pi}\sigma}\exp\left(-\frac{\left(x-\mu\right)^{2}}{2\sigma^{2}}\right).
+\]
+
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+(a) La función de error se define por 
+\begin_inset Formula 
+\[
+\mathrm{erf}\left(x\right)=\frac{2}{\sqrt{\pi}}\intop_{0}^{x}e^{-t^{2}}dt
+\]
+
+\end_inset
+
+Demuestre que la función de distribución acumulativa para la distribución
+ normal 
+\begin_inset Formula 
+\[
+F\left(x;\mu,\sigma\right)=\intop_{-\infty}^{x}f\left(t;\mu,\sigma\right)dt
+\]
+
+\end_inset
+
+se puede escribir como 
+\begin_inset Formula 
+\[
+F\left(x;\mu,\sigma\right)=\frac{1+\mathrm{erf}\left(\frac{x-\mu}{\sqrt{2}\sigma}\right)}{2}.
+\]
+
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+
+\series bold
+Demostración
+\series default
+
+\begin_inset Newline newline
+\end_inset
+
+Sustituyendo tenemos 
+\begin_inset Formula 
+\[
+F\left(x;\mu,\sigma\right)=\intop_{-\infty}^{x}f\left(t;\mu,\sigma\right)dt=\intop_{-\infty}^{x}\frac{1}{\sqrt{2\pi}\sigma}\exp\left(-\frac{\left(t-\mu\right)^{2}}{2\sigma^{2}}\right)dt=\frac{1}{\sqrt{2\pi}\sigma}\intop_{-\infty}^{x}\exp\left(-\left(\frac{t-\mu}{2\sigma}\right)^{2}\right)dt.
+\]
+
+\end_inset
+
+Realizando un cambio de variable tenemos que 
+\begin_inset Formula $w=\frac{t-\mu}{\sqrt{2}\sigma}$
+\end_inset
+
+ y 
+\begin_inset Formula $dw=\frac{1}{\sqrt{2}\sigma}dt$
+\end_inset
+
+.
+ Despejando 
+\begin_inset Formula $dt=\sqrt{2}\sigma dw$
+\end_inset
+
+.
+\begin_inset Newline newline
+\end_inset
+
+Si 
+\begin_inset Formula $t\rightarrow-\infty$
+\end_inset
+
+ entonces el numerador es un número negativo muy grande y 
+\begin_inset Formula $w\rightarrow-\infty$
+\end_inset
+
+.
+ 
+\begin_inset Newline newline
+\end_inset
+
+Si 
+\begin_inset Formula $t=x$
+\end_inset
+
+ entonces 
+\begin_inset Formula $w=\frac{x-\mu}{\sqrt{2}\sigma}$
+\end_inset
+
+.
+ 
+\begin_inset Formula 
+\[
+F\left(x;\mu,\sigma\right)=\frac{1}{\sqrt{2\pi}\sigma}\intop_{-\infty}^{\frac{x-\mu}{\sqrt{2}\sigma}}\exp\left(-\left(w\right)^{2}\right)\sqrt{2}\sigma dw
+\]
+
+\end_inset
+
+ 
+\begin_inset Formula 
+\[
+=\frac{1}{\sqrt{\pi}}\intop_{-\infty}^{\frac{x-\mu}{\sqrt{2}\sigma}}\exp\left(-\left(w\right)^{2}\right)dw
+\]
+
+\end_inset
+
+ 
+\begin_inset Formula 
+\[
+=\frac{1}{\sqrt{\pi}}\intop_{-\infty}^{0}\exp\left(-\left(w\right)^{2}\right)dw+\frac{1}{\sqrt{\pi}}\intop_{0}^{\frac{x-\mu}{\sqrt{2}\sigma}}\exp\left(-\left(t\right)^{2}\right)dt
+\]
+
+\end_inset
+
+ Resolviendo primero 
+\begin_inset Formula $\frac{1}{\sqrt{\pi}}\intop_{-\infty}^{0}\exp\left(-\left(w\right)^{2}\right)dw$
+\end_inset
+
+ haciendo 
+\begin_inset Formula $w=\frac{z}{\sqrt{2}}$
+\end_inset
+
+, 
+\begin_inset Formula $dw=\frac{dz}{\sqrt{2}}$
+\end_inset
+
+,
+\begin_inset Formula $w^{2}=\frac{z^{2}}{2}$
+\end_inset
+
+ sustituimos para resolver 
+\begin_inset Formula 
+\[
+\frac{1}{\sqrt{\pi}}\intop_{-\infty}^{0}\exp\left(-\left(w\right)^{2}\right)dw=\frac{1}{\sqrt{2\pi}}\intop_{-\infty}^{0}\exp\left(-\frac{z^{2}}{2}\right)dz
+\]
+
+\end_inset
+
+ 
+\begin_inset Formula 
+\[
+=\frac{1}{2}\left(\frac{2}{\sqrt{2\pi}}\intop_{-\infty}^{0}\exp\left(-\frac{z^{2}}{2}\right)dz\right)
+\]
+
+\end_inset
+
+La integral puede escribirse como 
+\begin_inset Formula $2\intop_{-\infty}^{0}\exp\left(-\frac{z^{2}}{2}\right)dz=\intop_{-\infty}^{\infty}\exp\left(-\frac{z^{2}}{2}\right)dz$
+\end_inset
+
+ y el resultado es 
+\begin_inset Formula $\intop_{-\infty}^{\infty}\exp\left(-\frac{z^{2}}{2}\right)dz=\sqrt{2\pi}$
+\end_inset
+
+.
+ 
+\begin_inset Newline newline
+\end_inset
+
+Entonces sustituyendo en el lado izquierdo tenemos 
+\begin_inset Formula 
+\[
+\frac{1}{2}\left(\frac{2}{\sqrt{2\pi}}\intop_{-\infty}^{0}\exp\left(-\frac{z^{2}}{2}\right)dz\right)=\frac{1}{2}\frac{1}{\sqrt{2\pi}}\sqrt{2\pi}=\frac{1}{2}.
+\]
+
+\end_inset
+
+Continuando con la integral del lado derecho
+\begin_inset Formula 
+\[
+=\frac{1}{2}+\frac{1}{2}\left(\frac{2}{\sqrt{\pi}}\intop_{0}^{\frac{x-\mu}{\sqrt{2}\sigma}}\exp\left(-\left(t\right)^{2}\right)dt\right)
+\]
+
+\end_inset
+
+ 
+\begin_inset Formula 
+\[
+=\frac{1}{2}+\frac{1}{2}\left(\mathrm{erf}\left(\frac{x-\mu}{\sqrt{2}\sigma}\right)\right)
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+=\frac{1+\mathrm{erf}\left(\frac{x-\mu}{\sqrt{2}\sigma}\right)}{2}=F\left(x;\mu,\sigma\right)
+\]
+
+\end_inset
+
+(b) El nombre del programa es 
+\shape italic
+NCDF.f
+\shape default
+.
+ Pueden usarse los siguientes valores 
+\begin_inset Formula $x=1.644853,\:\mu=0,\:\sigma=1$
+\end_inset
+
+ y obtenemos 
+\begin_inset Formula $F\left(x;\mu,\sigma\right)=0.9499$
+\end_inset
+
+.
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+(c) El nombre del programa es 
+\shape italic
+INVNCDF.f
+\shape default
+.
+ Pueden usarse los valores obtenidos en el inciso anterior y obtendremos
+ 
+\begin_inset Formula $x$
+\end_inset
+
+ ingresando 
+\begin_inset Formula $p=F\left(x;\mu,\sigma\right)=0.9499$
+\end_inset
+
+ cuando el programa lo solicite.
+\end_layout
+
+\begin_layout Enumerate
+Demuestre que las dos raíces 
+\begin_inset Formula $x_{1}$
+\end_inset
+
+y 
+\begin_inset Formula $x_{2}$
+\end_inset
+
+ de 
+\begin_inset Formula $ax^{2}+bx+c=0$
+\end_inset
+
+ están dadas por 
+\begin_inset Formula 
+\[
+x_{1}=\frac{-b\pm\sqrt{b^{2}-4ac}}{2a},\qquad x_{2}=\frac{c}{ax_{1}}
+\]
+
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+
+\series bold
+Demostración
+\series default
+
+\begin_inset Newline newline
+\end_inset
+
+Si 
+\begin_inset Formula $x_{2}$
+\end_inset
+
+ es solución de 
+\begin_inset Formula $ax^{2}+bx+c=0$
+\end_inset
+
+ entoces 
+\begin_inset Formula 
+\[
+a\left(\frac{c}{ax_{1}}\right)^{2}+b\left(\frac{c}{ax_{1}}\right)+c=\frac{ac^{2}}{a^{2}x_{1}^{2}}+\frac{bc}{ax_{1}}+c=\frac{c^{2}+bcx_{1}+acx_{1}^{2}}{ax_{1}^{2}}=0
+\]
+
+\end_inset
+
+con 
+\begin_inset Formula $x_{1}=\frac{-b+sgn(b)\sqrt{b^{2}-4ac}}{2a}$
+\end_inset
+
+ la ecuacion anterior se convierte en:
+\begin_inset Formula 
+\[
+\frac{c^{2}+bc\left(\frac{-b+sgn(b)\sqrt{b^{2}-4ac}}{2a}\right)+ac\left(\frac{-b+sgn(b)\sqrt{b^{2}-4ac}}{2a}\right)^{2}}{a\left(\frac{-b+sgn(b)\sqrt{b^{2}-4ac}}{2a}\right)^{2}}
+\]
+
+\end_inset
+
+ Desarrollando las potencias y productos tenemos: 
+\begin_inset Formula 
+\[
+\frac{c^{2}+\left(\frac{-b^{2}c+sgn(b)bc\sqrt{b^{2}-4ac}}{2a}\right)+ac\left(\frac{b^{2}-2sgn(b)b\sqrt{b^{2}-4ac}+sgn(b)b^{2}-4ac}{\left(2a\right)^{2}}\right)}{a\left(\frac{b^{2}-2sgn(b)b\sqrt{b^{2}-4ac}+sgn(b)b^{2}-4ac}{\left(2a\right)^{2}}\right)}
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+=\frac{c^{2}-\frac{b^{2}c}{2a}+\frac{sgn(b)bc\sqrt{b^{2}-4ac}}{2a}+\frac{ab^{2}c}{4a^{2}}-\frac{sgn(b)2abc\sqrt{b^{2}-4ac}}{4a^{2}}+\frac{sgn(b)ab^{2}c}{4a^{2}}-\frac{4a^{2}c^{2}}{4a^{2}}}{a\left(\frac{b^{2}-2sgn(b)b\sqrt{b^{2}-4ac}+sgn(b)b^{2}-4ac}{\left(2a\right)^{2}}\right)}
+\]
+
+\end_inset
+
+ 
+\begin_inset Formula 
+\[
+=\frac{c^{2}-c^{2}+\frac{b^{2}c}{4a}+\frac{b^{2}c}{4a}-\frac{b^{2}c}{2a}+\frac{sgn(b)bc\sqrt{b^{2}-4ac}}{2a}-\frac{sgn(b)2bc\sqrt{b^{2}-4ac}}{4a}}{a\left(\frac{b^{2}-2sgn(b)b\sqrt{b^{2}-4ac}+sgn(b)b^{2}-4ac}{\left(2a\right)^{2}}\right)}
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+=\frac{0}{a\left(\frac{-b+sgn(b)\sqrt{b^{2}-4ac}}{2a}\right)^{2}}=0.
+\]
+
+\end_inset
+
+Estas fórmulas se emplean para evitar errores numéricos cuando la diferencia
+ entre 
+\begin_inset Formula $\left|b\right|$
+\end_inset
+
+ y el discriminante 
+\begin_inset Formula $\sqrt{b^{2}-4ac}$
+\end_inset
+
+ es muy pequeña, por lo que 
+\begin_inset Formula 
+\[
+\frac{-b+sgn(b)\sqrt{b^{2}-4ac}}{2a}\neq0.
+\]
+
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+El programa que hace uso de estas formulas es 
+\shape italic
+QuadraticEq.f
+\shape default
+.
+ La tolerancia que debe cumplir la diferencia para hacer uso de las formulas
+ expustas es de 
+\begin_inset Formula $0.01$
+\end_inset
+
+.Ingresando los coeficientes 
+\begin_inset Formula $a=\frac{1}{10}\quad,b=5\quad,c=\frac{1}{100}$
+\end_inset
+
+ el programa utiliza la formula alterntiva para calcular 
+\begin_inset Formula $x_{2}$
+\end_inset
+
+.
+ El resultado es 
+\begin_inset Formula 
+\[
+x_{1}=-49.9979...\qquad\textrm{y}\qquad x_{2}=-2.0000...E-03.
+\]
+
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+El programa también es capaz de calcular raíces complejas utilizando la
+ formlua cuadrática 
+\begin_inset Formula $x=\frac{-b\pm\sqrt{b^{2}-4ac}}{2a}$
+\end_inset
+
+ y no la formula alternativa.
+\end_layout
+
+\begin_layout Enumerate
+El algoritmo de Gauss-Jordan utilizado en el programa 
+\shape italic
+GaussJ.f
+\shape default
+ es el propuesto en 
+\shape italic
+Numerical Recipies in Fortran 77.
+ 
+\shape default
+
+\begin_inset Newline newline
+\end_inset
+
+Ingresando el sistema
+\shape italic
+ 
+\shape default
+
+\begin_inset Formula 
+\[
+A\mathbf{x=b}
+\]
+
+\end_inset
+
+
+\shape italic
+
+\begin_inset Formula 
+\[
+\left[\begin{array}{ccc}
+0 & 1 & 1\\
+1 & 1 & 1\\
+1 & 1 & 0
+\end{array}\right]\left[\begin{array}{c}
+x_{1}\\
+x_{2}\\
+x_{3}
+\end{array}\right]=\left[\begin{array}{c}
+1\\
+2\\
+2
+\end{array}\right]
+\]
+
+\end_inset
+
+
+\shape default
+ El programa solicita la dimensión 
+\begin_inset Formula $n$
+\end_inset
+
+ de la matriz 
+\begin_inset Formula $A$
+\end_inset
+
+ cuadrada y cada elemento 
+\begin_inset Formula $a_{ij}$
+\end_inset
+
+.
+ El número de vectores columna solución para este ejercicio es 
+\begin_inset Formula $1$
+\end_inset
+
+ y los elementos son solicitados como 
+\begin_inset Formula $b_{i1}$
+\end_inset
+
+.
+ La solución al sistema que muestra el programa es: 
+\begin_inset Formula 
+\[
+\begin{array}{c}
+x_{1}=1\\
+x_{2}=1\\
+x_{3}=0
+\end{array}.
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+Las ecuaciones del algoritmo de Crout factorizan una matriz cuadrada 
+\begin_inset Formula 
+\[
+A=\left[\begin{array}{cccc}
+a_{11} & a_{12} & \ldots & a_{1j}\\
+a_{21} & a_{22} & \ldots & a_{2j}\\
+\vdots & \vdots & \ddots & \vdots\\
+a_{i1} & a_{i2} & \ldots & a_{ij}
+\end{array}\right],\qquad i=j=1,2,\cdots,N
+\]
+
+\end_inset
+
+ en dos matrices 
+\begin_inset Formula $A=LU$
+\end_inset
+
+ donde 
+\begin_inset Formula $L$
+\end_inset
+
+ es una matriz triangular inferior y 
+\begin_inset Formula $U$
+\end_inset
+
+ es una matriz triangular superior.
+\begin_inset Newline newline
+\end_inset
+
+ Si 
+\begin_inset Formula $N=4$
+\end_inset
+
+ tenemos
+\begin_inset Newline newline
+\end_inset
+
+ 
+\begin_inset Formula 
+\[
+L=\left[\begin{array}{cccc}
+\alpha_{11} & 0 & 0 & 0\\
+\alpha_{21} & \alpha_{22} & 0 & 0\\
+\alpha_{31} & \alpha_{32} & \alpha_{33} & 0\\
+\alpha_{41} & \alpha_{42} & \alpha_{43} & \alpha_{44}
+\end{array}\right]\;\textrm{y}\;U=\left[\begin{array}{cccc}
+\beta_{11} & \beta_{12} & \beta_{13} & \beta_{14}\\
+0 & \beta_{22} & \beta_{23} & \beta_{24}\\
+0 & 0 & \beta_{33} & \beta_{34}\\
+0 & 0 & 0 & \beta_{44}
+\end{array}\right].
+\]
+
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+La factorización 
+\begin_inset Formula $LU$
+\end_inset
+
+ de Crout nos permite hacer 
+\begin_inset Formula $\alpha_{ii}=1,\;i=1,2,\ldots N$
+\end_inset
+
+.
+ Al tener los valores de los elementos de la diagonal de 
+\begin_inset Formula $L$
+\end_inset
+
+ podemos entonces resolver el sistema de 
+\begin_inset Formula $N^{2}$
+\end_inset
+
+ ecuaciones para factorizar 
+\begin_inset Formula 
+\[
+A=LU=\left[\begin{array}{cccc}
+\beta_{11} & \beta_{12} & \beta_{13} & \beta_{14}\\
+\alpha_{21} & \beta_{22} & \beta_{23} & \beta_{24}\\
+\alpha_{31} & \alpha_{32} & \beta_{33} & \beta_{34}\\
+\alpha_{41} & \alpha_{42} & \alpha_{43} & \beta_{44}
+\end{array}\right]
+\]
+
+\end_inset
+
+ haciendo los siguientes pasos:
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status open
+
+\begin_layout Itemize
+Asignar 
+\begin_inset Formula $\alpha_{ii}=1,\qquad i=1,2,\ldots N$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Itemize
+Para cada 
+\begin_inset Formula $j=1,2,3,\ldots,N$
+\end_inset
+
+ hacer los siguientes procedimientos.
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+Primero, para 
+\begin_inset Formula $i=1,2,\ldots,j$
+\end_inset
+
+ calculamos 
+\begin_inset Formula 
+\[
+\beta_{ij}=a_{ij}-\stackrel[k=1]{i-1}{\sum}\alpha_{ik}\beta_{kj}.
+\]
+
+\end_inset
+
+ Cuando 
+\begin_inset Formula $i=1$
+\end_inset
+
+ el termino de la sumatoria es igual a 
+\begin_inset Formula $0$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Itemize
+Segundo, para 
+\begin_inset Formula $i=j+1,j+2,\ldots,N$
+\end_inset
+
+ resolvemos 
+\begin_inset Formula 
+\[
+\alpha_{ij}=\frac{1}{\beta_{jj}}\left(a_{ij}-\stackrel[k=1]{j-1}{\sum}\alpha_{ik}\beta_{kj}\right).
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+Realizar ambos cálculos antes de avanzar al siguiente valor de 
+\begin_inset Formula $j$
+\end_inset
+
+.
+\end_layout
+
+\end_deeper
+\end_inset
+
+El programa que utiliza estas formulas para factorizar 
+\begin_inset Formula $A$
+\end_inset
+
+ y resolver el sistema 
+\begin_inset Formula $A\mathbf{x}=\mathbf{b}$
+\end_inset
+
+ es 
+\shape italic
+CROUT.f
+\shape default
+.
+ 
+\begin_inset Newline newline
+\end_inset
+
+El programa realiza un ejemplo con una matriz 
+\begin_inset Formula 
+\[
+A=\left[\begin{array}{cccc}
+1 & 1 & 0 & 3\\
+2 & 1 & -1 & 1\\
+3 & -1 & -1 & 2\\
+-1 & 2 & 3 & -1
+\end{array}\right].
+\]
+
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+Utilizando la subrutina 
+\shape italic
+ludcmp
+\shape default
+ obtenemos 
+\begin_inset Formula 
+\[
+A=LU=\left[\begin{array}{cccc}
+1 & 1 & 0 & 3\\
+2 & -1 & -1 & -5\\
+3 & 4 & 3 & 13\\
+-1 & -3 & 0 & -13
+\end{array}\right].
+\]
+
+\end_inset
+
+ 
+\begin_inset Newline newline
+\end_inset
+
+Resolvemos el sistema haciendo substitucion hacia atras a 
+\begin_inset Formula $L$
+\end_inset
+
+ y substitución hacia adelante a 
+\begin_inset Formula $U$
+\end_inset
+
+ en la subrutina 
+\shape italic
+lubksb
+\shape default
+ que devuelve 
+\begin_inset Formula 
+\[
+\mathbf{x}=\left[\begin{array}{c}
+3\\
+-1\\
+0\\
+2
+\end{array}\right].
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+Haga un programa que resuelva sistemas de ecuaciones sobredeterminados.
+\begin_inset Newline newline
+\end_inset
+
+Consideremos la matriz rectangular 
+\begin_inset Formula 
+\[
+A=\left[\begin{array}{ccccc}
+a_{11} & a_{12} & a_{13} & \ldots & a_{1j}\\
+a_{21} & a_{22} & a_{23} & \ldots & a_{2j}\\
+\vdots & \vdots & \ddots & \ldots & \vdots\\
+a_{i1} & a_{i2} & a_{i3} & \ldots & a_{ij}
+\end{array}\right],\quad\textrm{con}\begin{array}{c}
+i=1,2,\ldots,m\\
+j=1,2,\ldots n
+\end{array}
+\]
+
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+Se dice que un sistema 
+\begin_inset Formula $A\mathbf{x}=\mathbf{b}$
+\end_inset
+
+ es sobredetermindo cuando 
+\begin_inset Formula $m>n$
+\end_inset
+
+.
+ Es decir cuando se tienen más ecuaciones que incógnitas.
+ Para este tipo de sistemas no existe una solución, lo que se busca es un
+ vector solución que de la mejor aproximacion para cada una de las ecuaciones
+ del sistema 
+\begin_inset Formula $A\mathbf{x}=\mathbf{b}$
+\end_inset
+
+.
+ El problema lineal de mínimos cuadrados se acerca a la optimizacion encontrando
+ un vector 
+\begin_inset Formula $x$
+\end_inset
+
+ con la mínima norma del vector residual 
+\begin_inset Formula $\mathbf{r}=\mathbf{b}-A\mathbf{x}$
+\end_inset
+
+.
+ 
+\begin_inset Newline newline
+\end_inset
+
+La solución de mínimos cuadrados de 
+\begin_inset Formula $\mathbf{\mathit{A}x}=\mathbf{b}$
+\end_inset
+
+ es el vector 
+\begin_inset Formula $\mathbf{x}$
+\end_inset
+
+ que hace de 
+\begin_inset Formula $\left\Vert \mathbf{r}\right\Vert _{2}=\left\Vert \mathbf{b}-A\mathbf{x}\right\Vert _{2}$
+\end_inset
+
+ un mínimo 
+\begin_inset Formula 
+\[
+\underset{\mathbf{x}\epsilon\mathbb{R^{n}}}{\min}\left\Vert \mathbf{b}-A\mathbf{x}\right\Vert ^{2}
+\]
+
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+Realizando la factorización 
+\begin_inset Formula $QR$
+\end_inset
+
+ de 
+\begin_inset Formula $A$
+\end_inset
+
+, la solucion al sistema se obtiene resolviendo 
+\begin_inset Formula 
+\[
+R\mathbf{x}=Q^{t}\mathbf{b\mathit{.}}
+\]
+
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+No fue posible realizar un programa en FORTRAN para solucionar sistemas
+ sobredeterminados.
+ El principal problema fue la factorización 
+\begin_inset Formula $QR$
+\end_inset
+
+ utilizando la transformacion de Householder.
+ Se optó por este método de ortonnormalización ya que el método de Gram-Schmidt
+ no es recomendable para métodos númericos por problemas de acumulación
+ de redondeo.
+ 
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+Se presenta un script 
+\shape italic
+SimpleMinsqrtWithQR.m
+\shape default
+ de Octave para la solucion de sistemas sobredeterminados.
+ Se hace uso de la función 
+\shape italic
+qr(A)
+\shape default
+ que utiliza subrutinas de LAPACK para calcular la factorización 
+\begin_inset Formula $QR.$
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+Como ejemplo resolvemos el sistema 
+\begin_inset Formula $\mathbf{\mathit{A}x}=\mathbf{b}$
+\end_inset
+
+con 
+\begin_inset Formula 
+\[
+A=\left[\begin{array}{cc}
+3 & -1\\
+4 & 2\\
+0 & 1
+\end{array}\right]\quad\textrm{y}\quad\mathbf{b}=\left[\begin{array}{c}
+0\\
+2\\
+1
+\end{array}\right]
+\]
+
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+La factorización 
+\begin_inset Formula $A=QR$
+\end_inset
+
+ es 
+\begin_inset Formula 
+\[
+Q=\left[\begin{array}{ccc}
+-0.60000 & 0.71554 & 0.35777\\
+-0.80000 & -0.53666 & -0.26833\\
+0.00000 & -0.44721 & 0.89443
+\end{array}\right]\quad R=\left[\begin{array}{cc}
+-5.00000 & -1.00000\\
+0.00000 & -2.23607\\
+0.00000 & 0.00000
+\end{array}\right]
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+Q^{t}\mathbf{b}=\left[\begin{array}{c}
+-1.60000\\
+-1.52053\\
+0.35777
+\end{array}\right]
+\]
+
+\end_inset
+
+El vector óptimo a ser solución se obtiene realizando una division izquierda
+ en el script
+\begin_inset Formula 
+\[
+\mathbf{x}=R\setminus Q^{t}\mathbf{b}.
+\]
+
+\end_inset
+
+En Octave, si el sistema no es cuadrado, o si la matriz de coeficientes
+ es singular, la division izquierda calcula una solución de norma mínima
+ 
+\begin_inset Formula 
+\[
+\mathbf{x}=\left[\begin{array}{c}
+0.18400\\
+0.68000
+\end{array}\right].
+\]
+
+\end_inset
+
+
+\end_layout
+
+\end_body
+\end_document
