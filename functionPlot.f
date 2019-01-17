@@ -13,7 +13,7 @@ C     QUERY FOR ANOTHER PLOT UNTIL THE USER SIGNALS SATISFACTION.
       CHARACTER*1 scr(ISCR,JSCR),blank,zero,yy,xx,ff
       SAVE blank,zero,yy,xx,ff
       DATA blank,zero,yy,xx,ff/' ','-','1','-','x'/
-1     continue
+ 1    continue
       write(*,*)' Enter  x1,x2 (= to stop)'
 C     QUERY FOR ANOTHER PLOT, QUIT IF x1=x2
       read(*,*)x1,x2
